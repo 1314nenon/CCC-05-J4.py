@@ -1,0 +1,158 @@
+rows = int(input())
+cols = int(input())
+
+grid = [[0 for _ in range(cols)] for _ in range(rows)]
+
+wid = int(input())
+leng = int(input())
+
+steps = int(input())
+
+counter = 0
+
+for x in range(wid):
+  for y in range(leng):
+    grid[x][y] = 1
+    grid[-x-1][-y-1] = 1
+    grid[-x-1][y] = 1
+    grid[x][-y-1] = 1
+
+# for x in range(len(grid)):
+#   print(grid[x])
+
+
+
+def rightdown():
+  global counter, grid, x, y
+  while True:
+    grid[x][y] = 1
+    while x+1 > rows-1 or grid[x+1][y] == 1:
+      if grid[x][y+1] == 1:
+        return
+      y += 1
+      grid[x][y] = 1
+      counter += 1
+      # print(counter)
+      # print(x,y)
+      if counter == steps:
+        print(x+1)
+        print(y+1)
+        return
+    x += 1
+    counter += 1
+    # print(counter)
+    # print(x,y)
+    if counter == steps:
+      print(x+1)
+      print(y+1)
+      return
+
+def downleft():
+  global counter, grid, x, y
+  while True:
+    grid[x][y] = 1
+    while y+1 > cols-1 or grid[x][y+1] == 1:
+      if grid[x-1][y] == 1:
+        return
+      x = x - 1
+      grid[x][y] = 1
+      counter += 1
+      # print(counter)
+      # print(x,y)
+      if counter == steps:
+        print(x+1)
+        print(y+1)
+        return
+    y += 1
+    counter += 1
+    # print(counter)
+    # print(x,y)
+    if counter == steps:
+      print(x+1)
+      print(y+1)
+      return
+
+def leftup():
+  global counter, grid, x, y
+  while True:
+    grid[x][y] = 1
+    while x-1 < 0 or grid[x-1][y] == 1:
+      if grid[x][y-1] == 1:
+        return
+      y = y - 1
+      grid[x][y] = 1
+      counter += 1
+      # print(counter)
+      # print(x,y)
+      if counter == steps:
+        print(x+1)
+        print(y+1)
+        return
+    x = x - 1
+    counter += 1
+    # print(counter)
+    # print(x,y)
+    if counter == steps:
+      print(x+1)
+      print(y+1)
+      return
+
+def upright():
+  global counter, grid, x, y
+  while True:
+    grid[x][y] = 1
+    while y-1 < 0 or grid[x][y-1] == 1:
+      if grid[x+1][y] == 1:
+        return
+      x = x + 1
+      grid[x][y] = 1
+      counter += 1
+      # print(counter)
+      # print(x,y)
+      if counter == steps:
+        print(x+1)
+        print(y+1)
+        return
+    y = y - 1
+    counter += 1
+    # print(counter)
+    # print(x,y)
+    if counter == steps:
+      print(x+1)
+      print(y+1)
+      return
+
+
+x = wid
+y = 0
+
+while True:
+  rightdown()
+  if counter == steps:
+    break
+  elif grid[x][y-1] == 1 and grid[x][y+1] == 1 and grid[x-1][y] == 1 and (x+1 > rows-1 or grid[x+1][y] == 1):
+    print(x+1)
+    print(y+1)
+    break
+  downleft()
+  if counter == steps:
+    break
+  elif grid[x][y-1] == 1 and (y+1 > cols - 1 or grid[x][y+1] == 1) and grid[x-1][y] == 1 and grid[x+1][y]:
+    print(x+1)
+    print(y+1)
+    break
+  leftup()
+  if counter == steps:
+    break
+  elif grid[x][y-1] == 1 and grid[x][y+1] == 1 and (x == 0 or grid[x-1][y] == 1) and grid[x+1][y] == 1:
+    print(x+1)
+    print(y+1)
+    break
+  upright()
+  if counter == steps:
+    break
+  elif (y == 0 or grid[x][y-1] == 1) and grid[x][y+1] == 1 and grid[x-1][y] == 1 and grid[x+1][y] == 1:
+    print(x+1)
+    print(y+1)
+    break
+
